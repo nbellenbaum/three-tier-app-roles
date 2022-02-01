@@ -6,7 +6,6 @@ global
   user haproxy
   group haproxy
   daemon
-
 defaults
   log global
   mode  http
@@ -15,16 +14,11 @@ defaults
         timeout connect 5000
         timeout client 50000
         timeout server 50000
-
 frontend hafrontend
     bind *:80
     mode http
     default_backend app-servers
-
 backend app-servers
     mode http
     balance roundrobin
     option forwardfor
-    server  app1 app1.example.com:8080 cookie app1 check
-    server  app2 app2.example.com:8080 cookie app2 check
- 

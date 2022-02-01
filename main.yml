@@ -1,4 +1,35 @@
 ---
-- import_playbook: database.yml
-- import_playbook: apache.yml
-- import_playbook: haproxy.yml
+- name: Play to setup mysql server
+  hosts: database_servers
+  roles:
+    - role: firewall
+      vars:
+        firewall_services:
+          - mysql
+
+    - role: mysql-server
+
+- name: Play to setup apache servers
+  hosts: backend_servers
+  roles:
+    - role: firewall
+      vars:
+        firewall_services:
+          - http
+        firewall_tcp_ports:
+          - 8080
+
+    - role: apache
+
+- name: Play to setup Haproxy
+  hosts: loadbalancers
+  roles:
+    - role: firewall
+      vars:
+        firewall_services:
+          - http
+        firewall_tcp_ports:
+          - 5000
+
+    - role: haproxy
+

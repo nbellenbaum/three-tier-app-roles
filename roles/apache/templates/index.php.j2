@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><title>Ansible Application</title></head><body><center>
 <?php
-  $db=mysqli_connect("appdb.example.com","devops","redhat","userdb");
+  $db=mysqli_connect("{{hostvars[groups['database_servers'][0]]['inventory_hostname']}}","{{mysql_info.user}}","{{mysql_info.password}}","{{mysql_info.database}}");
   if (mysqli_connect_errno()){ 
     echo "<h1> Failed to connect </h1>";}
   else{
